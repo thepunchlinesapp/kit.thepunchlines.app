@@ -6,124 +6,236 @@
 <meta name="robots" content="noindex, nofollow">
 <title>Formation ambassadeurs · Punchlines</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Inter:ital,opsz,wght@0,14..32,400;0,14..32,600;0,14..32,700;1,14..32,400&display=swap">
 <style>
-/* Plateforme de cours : barre latérale de modules, une leçon à la fois au centre. */
+/* Plateforme de cours : sommaire à gauche (tiroir sur téléphone), une page à la fois au centre.
+   Sobre : fonds neutres, la couleur passe par le texte en gras, pas par des aplats. */
 :root {
-  --bg: #fbf6f7; --side: #f4e9ed; --surface: #ffffff; --ink: #2b1d2a; --muted: #6f5f6d;
-  --rose: #c2416f; --rose-soft: #f6dfe7; --line: #ead9df; --ok: #2f7d5b; --ok-soft: #dcefe5;
+  --bg: #fbf9f8; --side: #f5f1f0; --surface: #ffffff; --hover: #efe8ea;
+  --ink: #241b22; --muted: #675b64; --line: #e7dfe1; --line-fort: #d6cbcf;
+  --rose: #b4325f; --ok: #1f7a50; --voile: rgba(20, 12, 18, .45);
   --display: "Bricolage Grotesque", "Avenir Next", system-ui, sans-serif;
-  --body: "Atkinson Hyperlegible", "Helvetica Neue", Arial, sans-serif;
-  --mono: ui-monospace, "SF Mono", Menlo, monospace;
+  --body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --r: 12px;
+  color-scheme: light;
 }
 @media (prefers-color-scheme: dark) { :root {
-  --bg: #1b1419; --side: #221920; --surface: #271d25; --ink: #f3e8ee; --muted: #b7a4b1;
-  --rose: #f07aa5; --rose-soft: #3a2230; --line: #3a2c36; --ok: #6fd1a2; --ok-soft: #1f3a2d; color-scheme: dark } }
+  --bg: #161215; --side: #1b161a; --surface: #211b20; --hover: #2b2329;
+  --ink: #f2eaef; --muted: #b3a5af; --line: #352c33; --line-fort: #4a3e47;
+  --rose: #f27ba6; --ok: #6fd1a2; --voile: rgba(0, 0, 0, .6);
+  color-scheme: dark } }
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: 72px; }
 html, body { margin: 0; }
-body { background: var(--bg); color: var(--ink); font: 17px/1.6 var(--body); }
-a { color: var(--rose); text-underline-offset: 3px; overflow-wrap: anywhere; }
+body { background: var(--bg); color: var(--ink); font: 17px/1.65 var(--body); -webkit-font-smoothing: antialiased; }
+a { color: var(--rose); text-underline-offset: 3px; text-decoration-thickness: 1px; overflow-wrap: anywhere; }
+a:hover { text-decoration-thickness: 2px; }
 button { font: inherit; color: inherit; }
-:focus-visible { outline: 2px solid var(--rose); outline-offset: 2px; }
+:focus-visible { outline: 2px solid var(--rose); outline-offset: 2px; border-radius: 4px; }
+b, strong { font-weight: 700; }
+.chiffres, .md table, nav a .n, nav h4 small, .moment time, .progres small, .car-pos, .barre-mobile .compte { font-variant-numeric: tabular-nums; }
 
 /* Verrou */
-#verrou { min-height: 100vh; display: grid; place-items: center; padding: 24px max(16px, env(safe-area-inset-left)); }
-#verrou form { width: min(400px, 100%); display: grid; gap: 14px; }
-#verrou h1 { font: 700 34px/1.05 var(--display); margin: 0; }
-#verrou p { margin: 0; color: var(--muted); }
-#verrou input { font: inherit; padding: 12px 14px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); }
-#verrou .err { color: var(--rose); min-height: 1.4em; }
+#verrou { min-height: 100vh; min-height: 100dvh; display: grid; place-items: center; padding: 24px 16px; }
+#verrou form { width: min(380px, 100%); display: grid; gap: 14px; }
+#verrou h1 { font: 700 32px/1.1 var(--display); margin: 4px 0 0; }
+#verrou p { margin: 0 0 6px; color: var(--muted); font-size: 16px; }
+#verrou label { font-weight: 600; font-size: 15px; }
+#verrou input { font: inherit; padding: 12px 14px; border-radius: 10px; border: 1px solid var(--line-fort); background: var(--surface); color: var(--ink); width: 100%; margin-top: 6px; }
+#verrou input:focus { outline: 2px solid var(--rose); outline-offset: 0; border-color: transparent; }
+#verrou .btn { justify-content: center; }
+#verrou .err { color: var(--rose); font-weight: 700; min-height: 1.5em; font-size: 15px; }
 
 /* Mise en page */
-.app { display: grid; grid-template-columns: 300px 1fr; min-height: 100vh; }
-aside { background: var(--side); border-right: 1px solid var(--line); position: sticky; top: 0; height: 100vh; overflow-y: auto; padding: 24px 14px 40px; }
-.marque { padding: 0 10px 18px; }
-.marque .eyebrow { font: 700 11px/1 var(--body); letter-spacing: .12em; text-transform: uppercase; color: var(--rose); }
-.marque b { display: block; font: 700 22px/1.1 var(--display); margin-top: 8px; }
-.progres { margin: 14px 10px 6px; }
+.app { display: grid; grid-template-columns: 296px minmax(0, 1fr); min-height: 100vh; }
+aside { background: var(--side); border-right: 1px solid var(--line); position: sticky; top: 0; height: 100vh; overflow-y: auto; overscroll-behavior: contain; padding: 26px 14px 48px; }
+.marque { padding: 0 10px; display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+.marque .eyebrow { font-size: 11px; }
+.marque b { display: block; font: 700 20px/1.15 var(--display); margin-top: 6px; }
+.fermer { display: none; }
+.progres { margin: 18px 10px 4px; }
 .progres .barre { height: 6px; border-radius: 3px; background: var(--line); overflow: hidden; }
-.progres .barre i { display: block; height: 100%; background: var(--ok); width: 0; transition: width .3s; }
-.progres small { color: var(--muted); font-size: 13px; }
-nav h4 { font: 700 12px/1 var(--body); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin: 22px 10px 8px; }
-nav a { display: flex; gap: 10px; align-items: baseline; padding: 7px 10px; border-radius: 8px; color: var(--ink); text-decoration: none; font-size: 15px; line-height: 1.35; }
-nav a:hover { background: var(--rose-soft); }
-nav a[aria-current="page"] { background: var(--surface); box-shadow: inset 3px 0 0 var(--rose); font-weight: 700; }
-nav a .n { font: 600 12px var(--mono); color: var(--muted); flex: none; width: 20px; }
-nav a .v { margin-left: auto; color: var(--ok); flex: none; font-weight: 700; }
-main { min-width: 0; padding: 40px max(16px, env(safe-area-inset-right)) 100px max(16px, env(safe-area-inset-left)); }
-.page { max-width: 820px; margin: 0 auto; }
-.menu-btn { display: none; }
+.progres .barre i { display: block; height: 100%; background: var(--ok); width: 0; transition: width .3s; border-radius: 3px; }
+.progres small { display: block; color: var(--muted); font-size: 13px; margin-top: 6px; }
+.progres small b { color: var(--ok); }
+nav h4 { display: flex; justify-content: space-between; gap: 8px; font: 700 11.5px/1.3 var(--body); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 24px 10px 6px; }
+nav h4 small { font: 600 12px var(--body); letter-spacing: 0; text-transform: none; }
+nav a { display: flex; gap: 10px; align-items: baseline; padding: 6px 10px; border-radius: 8px; color: var(--ink); text-decoration: none; font-size: 14.5px; line-height: 1.4; }
+nav a:hover { background: var(--hover); }
+nav a[aria-current="page"] { color: var(--rose); font-weight: 700; background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); }
+nav a .n { font-size: 12px; font-weight: 600; color: var(--muted); flex: none; min-width: 18px; }
+nav a .v { margin-left: auto; color: var(--ok); flex: none; font-weight: 700; padding-left: 6px; }
+main { min-width: 0; padding: 48px 32px 96px; }
+.page { max-width: 760px; margin: 0 auto; }
+.barre-mobile, .voile { display: none; }
 
-/* Contenu */
-.eyebrow { font: 700 12px/1 var(--body); letter-spacing: .12em; text-transform: uppercase; color: var(--rose); }
-h1 { font: 700 clamp(30px, 5vw, 44px)/1.05 var(--display); margin: 10px 0 14px; letter-spacing: -.015em; text-wrap: balance; }
-h2 { font: 700 24px/1.2 var(--display); margin: 44px 0 12px; text-wrap: balance; }
-h3 { font: 700 19px/1.3 var(--display); margin: 30px 0 8px; }
-.lede { color: var(--muted); font-size: 19px; max-width: 62ch; }
-.md p, .md li { max-width: 68ch; }
-.md table { border-collapse: collapse; font-variant-numeric: tabular-nums; font-size: 15px; }
-.tbl { overflow-x: auto; margin: 14px 0; }
-.md th, .md td { border-bottom: 1px solid var(--line); padding: 8px 16px 8px 0; text-align: left; vertical-align: top; }
-.md code { font: 14px var(--mono); background: var(--rose-soft); padding: 1px 5px; border-radius: 4px; }
-.md blockquote { margin: 0; padding-left: 14px; border-left: 3px solid var(--line); color: var(--muted); }
-.video { position: relative; aspect-ratio: 16 / 9; width: 100%; border-radius: 14px; overflow: hidden; background: #000; margin: 18px 0 10px; }
+/* Typo */
+.eyebrow { font: 700 12px/1.3 var(--body); letter-spacing: .1em; text-transform: uppercase; color: var(--rose); }
+h1 { font: 700 clamp(28px, 4.2vw, 42px)/1.1 var(--display); margin: 10px 0 14px; letter-spacing: -.015em; text-wrap: balance; }
+h2 { font: 700 24px/1.25 var(--display); margin: 48px 0 12px; letter-spacing: -.005em; text-wrap: balance; }
+h3 { font: 700 19px/1.3 var(--display); margin: 32px 0 8px; }
+p, ul, ol { margin: 0 0 14px; }
+li { margin: 4px 0; }
+li::marker { color: var(--muted); }
+.lede { color: var(--muted); font-size: 18.5px; line-height: 1.6; max-width: 64ch; margin-bottom: 8px; }
+.md, .prose { max-width: 68ch; }
+.md h1 { margin-top: 10px; }
+.md table { border-collapse: collapse; font-size: 15px; min-width: 100%; }
+.tbl { overflow-x: auto; margin: 16px 0 22px; border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); }
+.md th, .md td { border-bottom: 1px solid var(--line); padding: 10px 14px; text-align: left; vertical-align: top; }
+.md th { font-size: 13px; color: var(--muted); font-weight: 700; white-space: nowrap; }
+.md tr:last-child td { border-bottom: 0; }
+.md code { font-size: .88em; background: var(--hover); padding: 1px 5px; border-radius: 4px; }
+.md blockquote { margin: 16px 0; padding-left: 16px; border-left: 3px solid var(--line-fort); color: var(--muted); }
+.md hr { border: 0; border-top: 1px solid var(--line); margin: 32px 0; }
+
+/* Vidéo et moments */
+.video { position: relative; aspect-ratio: 16 / 9; width: 100%; border-radius: var(--r); overflow: hidden; background: #000; margin: 22px 0 14px; }
 .video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-.chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 6px 0 24px; }
-.chip { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 6px 12px; font-size: 14px; cursor: pointer; text-align: left; }
-.chip b { font: 600 13px var(--mono); color: var(--rose); margin-right: 6px; }
-.chip:hover { border-color: var(--rose); }
-.encart { border-radius: 14px; padding: 18px 20px; margin: 26px 0; }
+.moments { margin: 0 0 30px; }
+.moments-titre { font-size: 13px; font-weight: 700; color: var(--muted); margin: 0 0 6px; }
+.moments ol { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2px 18px; }
+.moments li { margin: 0; }
+.moment { display: flex; gap: 12px; align-items: baseline; width: 100%; text-align: left; background: none; border: 0; border-radius: 8px; padding: 7px 8px; margin-left: -8px; cursor: pointer; font-size: 15px; line-height: 1.4; }
+.moment:hover { background: var(--hover); }
+.moment time { flex: none; min-width: 42px; font-weight: 700; color: var(--rose); }
+
+/* Encarts : un cadre fin, le titre en couleur */
+.encart { border: 1px solid var(--line); background: var(--surface); border-radius: var(--r); padding: 20px 22px 8px; margin: 30px 0; }
 .encart h3 { margin: 0 0 8px; font-size: 17px; }
-.encart ul { margin: 0; padding-left: 20px; }
-.encart p:last-child { margin-bottom: 0; }
-.encart.retenir { background: var(--rose-soft); }
-.encart.punch { background: var(--ok-soft); }
+.encart ul { padding-left: 20px; }
+.encart.retenir h3 { color: var(--rose); }
 .encart.punch h3 { color: var(--ok); }
-details.plus { border-top: 1px solid var(--line); padding: 14px 0; }
-details.plus:last-of-type { border-bottom: 1px solid var(--line); }
-details.plus > summary { cursor: pointer; font-weight: 700; color: var(--muted); }
-figure.media { margin: 18px 0; }
-figure.media img { max-width: 100%; border-radius: 10px; border: 1px solid var(--line); display: block; }
-figure.media video { width: 100%; max-width: 320px; aspect-ratio: 9 / 16; background: #000; border-radius: 12px; display: block; }
+
+/* Annexes repliables */
+.annexes { margin: 36px 0 0; border-bottom: 1px solid var(--line); }
+details.plus { border-top: 1px solid var(--line); }
+details.plus > summary { list-style: none; cursor: pointer; font-weight: 600; padding: 14px 0; display: flex; gap: 10px; align-items: baseline; }
+details.plus > summary::-webkit-details-marker { display: none; }
+details.plus > summary::before { content: "›"; flex: none; width: 12px; color: var(--muted); font-weight: 700; transition: transform .15s; display: inline-block; }
+details.plus[open] > summary::before { transform: rotate(90deg); }
+details.plus > summary:hover { color: var(--rose); }
+details.plus > .md, details.plus > p { padding: 0 0 18px 22px; }
+details.plus details.plus { margin-left: 22px; }
+details.plus details.plus > summary { font-weight: 400; font-size: 15px; padding: 10px 0; }
+details.plus details.plus:last-child { margin-bottom: 14px; }
+details.note { margin: 6px 0 8px; border-top: 0; }
+details.note > summary { font-size: 14px; color: var(--muted); padding: 6px 0; }
+details.note > p { font-size: 14px; color: var(--muted); max-width: 72ch; padding-bottom: 6px; }
+
+/* Médias dans le texte */
+figure.media { margin: 22px 0; }
+figure.media img { max-width: 100%; max-height: min(70vh, 620px); width: auto; border-radius: 10px; border: 1px solid var(--line); display: block; }
+figure.media video { width: 100%; max-width: 300px; aspect-ratio: 9 / 16; background: #000; border-radius: var(--r); display: block; }
 figure.media figcaption { font-size: 14px; color: var(--muted); margin-top: 6px; max-width: 60ch; }
-.charge { min-height: 120px; background: var(--side); border-radius: 10px; }
-.suite { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; margin-top: 48px; padding-top: 22px; border-top: 1px solid var(--line); }
-.btn { display: inline-flex; align-items: center; gap: 8px; font: 700 15px/1 var(--body); padding: 12px 18px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); text-decoration: none; cursor: pointer; }
+.charge { min-height: 120px; background: var(--hover); border-radius: 10px; }
+img.charge { min-width: min(100%, 320px); }
+
+/* Boutons */
+.btn { display: inline-flex; align-items: center; gap: 8px; font: 600 15px/1.2 var(--body); padding: 11px 16px; border-radius: 10px; border: 1px solid var(--line-fort); background: var(--surface); color: var(--ink); text-decoration: none; cursor: pointer; }
+.btn:hover { border-color: var(--ink); }
 .btn.plein { background: var(--rose); border-color: var(--rose); color: #fff; }
-.btn.vu { background: var(--ok); border-color: var(--ok); color: #fff; }
-.cartes { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); margin: 18px 0; }
-.carte { display: block; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px; text-decoration: none; color: var(--ink); }
+@media (prefers-color-scheme: dark) { .btn.plein { color: #1b0f16; } }
+.btn.plein:hover { filter: brightness(1.08); }
+.actions { display: flex; flex-wrap: wrap; gap: 10px; margin: 20px 0 28px; }
+
+/* Bas de page : marquer comme vu, puis précédent / suivant */
+.suite { margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--line); display: grid; gap: 16px; }
+.vu-btn { justify-self: start; display: inline-flex; align-items: center; gap: 10px; font: 600 15px/1.2 var(--body); padding: 11px 16px 11px 12px; border-radius: 10px; border: 1px solid var(--line-fort); background: var(--surface); cursor: pointer; }
+.vu-btn::before { content: ""; width: 18px; height: 18px; border-radius: 5px; border: 1.5px solid var(--line-fort); flex: none; }
+.vu-btn:hover { border-color: var(--ok); }
+.vu-btn.fait { color: var(--ok); border-color: var(--ok); font-weight: 700; }
+.vu-btn.fait::before { content: "✓"; border-color: var(--ok); background: var(--ok); color: var(--surface); font-size: 13px; line-height: 15px; text-align: center; }
+.annexes + .suite { border-top: 0; margin-top: 28px; padding-top: 0; }
+.pn { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.pn a { display: grid; gap: 2px; padding: 14px 16px; border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); color: var(--ink); text-decoration: none; line-height: 1.35; }
+.pn a:hover { border-color: var(--rose); }
+.pn a small { font-size: 13px; color: var(--muted); font-weight: 600; }
+.pn a span { font-weight: 700; }
+.pn a.suiv { text-align: right; grid-column: 2; }
+.pn a.suiv small { color: var(--rose); }
+
+/* Accueil */
+.reprendre { margin: 24px 0 8px; }
+.etapes { list-style: none; padding: 0; margin: 28px 0; display: grid; gap: 4px; counter-reset: e; }
+.etapes li { counter-increment: e; display: grid; grid-template-columns: 32px 1fr; gap: 14px; align-items: start; margin: 0; padding: 12px 0; border-bottom: 1px solid var(--line); }
+.etapes li:last-child { border-bottom: 0; }
+.etapes li::before { content: counter(e); width: 32px; height: 32px; font: 700 15px/30px var(--display); text-align: center; border-radius: 50%; border: 1.5px solid var(--line-fort); color: var(--rose); }
+.etapes a { font-weight: 700; font-size: 17.5px; text-decoration: none; }
+.etapes a:hover { text-decoration: underline; }
+.etapes span { color: var(--muted); font-size: 15.5px; display: block; margin-top: 2px; }
+.note-bas { color: var(--muted); font-size: 15px; }
+
+/* Cartes (listes de vidéos et de leçons) */
+.cartes { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); margin: 18px 0; }
+.carte { display: flex; flex-direction: column; gap: 4px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 16px 18px; text-decoration: none; color: var(--ink); }
 .carte:hover { border-color: var(--rose); }
-.carte b { display: block; font: 700 18px/1.25 var(--display); margin: 6px 0; }
-.carte span { color: var(--muted); font-size: 15px; }
-.etapes { list-style: none; padding: 0; margin: 20px 0; display: grid; gap: 12px; counter-reset: e; }
-.etapes li { counter-increment: e; display: grid; grid-template-columns: 34px 1fr; gap: 12px; }
-.etapes li::before { content: counter(e); font: 700 15px/34px var(--display); text-align: center; border-radius: 50%; background: var(--rose); color: #fff; }
-.etapes span { color: var(--muted); font-size: 15px; display: block; }
-.vid-robin { border-top: 1px solid var(--line); padding-top: 8px; margin-top: 36px; }
-.badge { display: inline-block; font: 700 12px/1 var(--body); padding: 5px 9px; border-radius: 999px; background: var(--rose-soft); color: var(--rose); letter-spacing: .02em; }
-.pub { display: grid; grid-template-columns: minmax(0, 300px) 1fr; gap: 24px; padding: 28px 0; border-top: 1px solid var(--line); }
-.pub .medias { display: flex; gap: 8px; overflow-x: auto; scroll-snap-type: x mandatory; }
+.carte b { font: 700 17px/1.3 var(--display); }
+.carte > span:last-child { color: var(--muted); font-size: 14.5px; line-height: 1.45; }
+.tag { font: 700 12px/1.3 var(--body); letter-spacing: .04em; text-transform: uppercase; color: var(--muted); }
+.tag.fort { color: var(--rose); }
+.tag.ok { color: var(--ok); }
+.tag.seul { display: block; margin: -2px 0 14px; }
+.robin-liste li { margin: 8px 0; }
+.robin-liste .voir { white-space: nowrap; font-size: 15px; }
+
+/* Pubs */
+.pub { display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 32px; padding: 36px 0; border-top: 1px solid var(--line); }
+.pub:first-of-type { margin-top: 20px; }
+.carrousel { position: relative; }
+.pub .medias { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; border-radius: var(--r); scrollbar-width: none; background: #000; }
+.pub .medias::-webkit-scrollbar { display: none; }
 .pub .medias > * { scroll-snap-align: start; flex: none; width: 100%; }
-.pub .medias img, .pub .medias video { width: 100%; border-radius: 12px; display: block; background: #000; aspect-ratio: 9 / 16; object-fit: cover; }
-.pub .nb { font-size: 13px; color: var(--muted); margin-top: 6px; }
-.chiffres { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px 16px; margin: 12px 0 16px; }
-.chiffres div { font-size: 13px; color: var(--muted); }
-.chiffres b { display: block; font: 700 20px/1.2 var(--display); color: var(--ink); font-variant-numeric: tabular-nums; }
-.pub dl { margin: 0; display: grid; gap: 10px; }
-.pub dt { font-weight: 700; font-size: 14px; color: var(--muted); }
+.pub .medias img, .pub .medias video, .pub .medias .charge { width: 100%; display: block; aspect-ratio: 9 / 16; object-fit: cover; border-radius: 0; background: #000; }
+.car-nav { display: flex; align-items: center; justify-content: space-between; margin-top: 8px; font-size: 14px; color: var(--muted); }
+.car-nav button { width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--line-fort); background: var(--surface); cursor: pointer; font-size: 18px; line-height: 1; display: grid; place-items: center; }
+.car-nav button:hover:not(:disabled) { border-color: var(--ink); }
+.car-nav button:disabled { opacity: .35; cursor: default; }
+.pub-tete { display: flex; flex-wrap: wrap; gap: 4px 14px; align-items: baseline; }
+.pub h2 { margin: 6px 0 2px; font-size: 24px; overflow-wrap: anywhere; }
+.pub .format { color: var(--muted); font-size: 15.5px; margin: 0; }
+.chiffres { display: grid; grid-template-columns: repeat(auto-fit, minmax(104px, 1fr)); gap: 14px 18px; margin: 20px 0 24px; padding: 16px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.chiffres div { font-size: 13px; color: var(--muted); line-height: 1.3; }
+.chiffres b { display: block; font: 700 22px/1.2 var(--display); color: var(--ink); white-space: nowrap; margin-bottom: 2px; }
+.chiffres .cle b { color: var(--rose); }
+.pub dl { margin: 0 0 14px; display: grid; gap: 4px; }
+.pub dt { font-weight: 700; font-size: 13px; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); margin-top: 12px; }
+.pub dt:first-child { margin-top: 0; }
 .pub dd { margin: 0; }
-@media (max-width: 860px) {
-  .app { grid-template-columns: 1fr; }
-  aside { position: fixed; inset: 0 auto 0 0; width: min(320px, 86vw); z-index: 20; transform: translateX(-100%); transition: transform .2s; padding-top: max(24px, env(safe-area-inset-top)); }
-  body.menu-ouvert aside { transform: none; box-shadow: 0 0 0 100vmax rgba(0,0,0,.35); }
-  .menu-btn { display: inline-flex; position: sticky; top: max(10px, env(safe-area-inset-top)); z-index: 10; margin-bottom: 14px; }
-  main { padding-top: 16px; }
-  .pub { grid-template-columns: 1fr; }
-  .pub .medias > * { width: 70%; max-width: 260px; }
+
+@media (max-width: 900px) {
+  .app { grid-template-columns: minmax(0, 1fr); }
+  aside { position: fixed; inset: 0 auto 0 0; width: min(330px, 88vw); height: 100%; z-index: 30; transform: translateX(-102%); transition: transform .22s ease; padding-top: max(20px, env(safe-area-inset-top)); padding-bottom: max(40px, env(safe-area-inset-bottom)); visibility: hidden; }
+  body.menu-ouvert aside { transform: none; visibility: visible; box-shadow: 0 0 40px rgba(0,0,0,.25); }
+  body.menu-ouvert { overflow: hidden; }
+  .voile { position: fixed; inset: 0; background: var(--voile); z-index: 25; }
+  body.menu-ouvert .voile { display: block; }
+  .fermer { display: grid; place-items: center; flex: none; width: 40px; height: 40px; margin: -6px -6px 0 0; border-radius: 10px; border: 1px solid var(--line-fort); background: var(--surface); cursor: pointer; font-size: 18px; }
+  .barre-mobile { display: flex; align-items: center; gap: 12px; position: sticky; top: 0; z-index: 20; background: var(--bg); border-bottom: 1px solid var(--line); padding: max(10px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) 10px max(16px, env(safe-area-inset-left)); }
+  .barre-mobile .btn { padding: 9px 13px; font-size: 15px; }
+  .barre-mobile .ou { min-width: 0; flex: 1; font-size: 14px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .barre-mobile .compte { flex: none; font-size: 13px; font-weight: 700; color: var(--ok); }
+  main { padding: 0 0 80px; }
+  .page { padding: 22px max(16px, env(safe-area-inset-right)) 0 max(16px, env(safe-area-inset-left)); }
 }
-@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+@media (max-width: 640px) {
+  body { font-size: 16.5px; }
+  .lede { font-size: 17px; }
+  h2 { font-size: 22px; margin-top: 40px; }
+  .video { border-radius: 10px; margin-top: 18px; }
+  .moments ol { grid-template-columns: 1fr; }
+  .encart { padding: 18px 16px 6px; }
+  .pn { grid-template-columns: 1fr; }
+  .pn a.suiv { grid-column: auto; grid-row: 1; }
+  .vu-btn { justify-self: stretch; justify-content: center; }
+  .pub { grid-template-columns: 1fr; gap: 18px; padding: 28px 0; }
+  .carrousel { max-width: 300px; }
+  details.plus > .md, details.plus > p { padding-left: 0; }
+  details.plus details.plus { margin-left: 12px; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
 </style>
 </head>
 <body>
@@ -132,17 +244,23 @@ figure.media figcaption { font-size: 14px; color: var(--muted); margin-top: 6px;
     <div class="eyebrow">Punchlines</div>
     <h1>Formation ambassadeurs</h1>
     <p>Entre le mot de passe que Harry t'a donné. Il reste enregistré sur cet appareil.</p>
-    <input id="mdp" type="password" autocomplete="current-password" placeholder="Mot de passe" required>
-    <button class="btn plein" type="submit">Ouvrir</button>
-    <div class="err" id="err"></div>
+    <label for="mdp">Mot de passe<input id="mdp" type="password" autocomplete="current-password" required></label>
+    <button class="btn plein" type="submit">Ouvrir la formation</button>
+    <div class="err" id="err" role="alert"></div>
   </form>
 </div>
 <div class="app" id="app" hidden>
-  <aside><div class="marque"><div class="eyebrow">Pour Nora</div><b>Formation ambassadeurs</b></div>
+  <aside id="sommaire" aria-label="Sommaire">
+    <div class="marque"><div><div class="eyebrow">Pour Nora</div><b>Formation ambassadeurs</b></div>
+      <button class="fermer" id="fermer" type="button" aria-label="Fermer le sommaire">✕</button></div>
     <div class="progres"><div class="barre"><i id="barre"></i></div><small id="progres-txt"></small></div>
     <nav id="nav"></nav>
   </aside>
-  <main><button class="btn menu-btn" id="menu-btn" type="button">☰ Sommaire</button><div class="page" id="page"></div></main>
+  <div class="voile" id="voile"></div>
+  <main>
+    <div class="barre-mobile"><button class="btn" id="menu-btn" type="button" aria-controls="sommaire" aria-expanded="false">☰ Sommaire</button><span class="ou" id="ou"></span><span class="compte" id="compte"></span></div>
+    <div class="page" id="page"></div>
+  </main>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
 <script>
@@ -178,24 +296,26 @@ async function media(chemin) {
 function hydrate(racine) {
   racine.querySelectorAll('[data-media]').forEach(async n => {
     const u = await media(n.dataset.media);
-    if (u) { n.src = u; n.classList.remove('charge'); }
+    // #t=0.1 : la vidéo affiche sa première image au lieu d'un rectangle noir
+    if (u) { n.src = n.tagName === 'VIDEO' ? u + '#t=0.1' : u; n.classList.remove('charge'); }
   });
 }
 
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 function md(txt) {
   let h = window.marked ? marked.parse(txt || '') : '<p>' + esc(txt) + '</p>';
-  h = h.replace(/\{\{image:([^}]+)\}\}/g, (_, f) => `</p><figure class="media"><img class="charge" data-media="images/${f.trim()}" alt=""></figure><p>`)
+  h = h.replace(/\{\{image:([^}]+)\}\}/g, (_, f) => `</p><figure class="media"><img class="charge" data-media="images/${f.trim()}" alt="" loading="lazy"></figure><p>`)
        .replace(/\{\{clip:([^}]+)\}\}/g, (_, f) => `</p><figure class="media"><video class="charge" data-media="clips/${f.trim()}" controls playsinline preload="metadata"></video></figure><p>`)
        .replace(/<table>/g, '<div class="tbl"><table>').replace(/<\/table>/g, '</table></div>')
        .replace(/<a href="http/g, '<a target="_blank" rel="noopener" href="http');
   return h.replace(/<p>\s*<\/p>/g, '');
 }
+const enLigne = x => md(x).replace(/^<p>|<\/p>\s*$/g, '');
 const mmss = t => Math.floor(t / 60) + ':' + String(Math.floor(t % 60)).padStart(2, '0');
 const yt = (id, t = 0, auto = 0) => `https://www.youtube-nocookie.com/embed/${id}?rel=0&start=${Math.floor(t)}${auto ? '&autoplay=1' : ''}`;
-function lecteur(id, moments) {
-  return `<div class="video"><iframe data-yt="${id}" src="${yt(id)}" title="Vidéo" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen loading="lazy"></iframe></div>` +
-    (moments && moments.length ? `<div class="chips">${moments.map(m => `<button class="chip" data-saut="${id}" data-t="${m.t}"><b>${mmss(m.t)}</b>${esc(m.label)}</button>`).join('')}</div>` : '');
+function lecteur(id, moments, titre) {
+  return `<div class="video"><iframe data-yt="${id}" src="${yt(id)}" title="${esc(titre || 'Vidéo')}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen loading="lazy"></iframe></div>` +
+    (moments && moments.length ? `<div class="moments"><div class="moments-titre">Aller directement à un moment</div><ol>${moments.map(m => `<li><button class="moment" type="button" data-saut="${id}" data-t="${m.t}"><time>${mmss(m.t)}</time><span>${esc(m.label)}</span></button></li>`).join('')}</ol></div>` : '');
 }
 document.addEventListener('click', e => {
   const c = e.target.closest('[data-saut]');
@@ -203,6 +323,21 @@ document.addEventListener('click', e => {
   const f = document.querySelector(`iframe[data-yt="${c.dataset.saut}"]`);
   if (f) { f.src = yt(c.dataset.saut, +c.dataset.t, 1); f.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
 });
+
+// Carrousels de slides (pubs) : boutons et compteur
+function carPos(m) {
+  const car = m.closest('.carrousel'), n = m.children.length, i = Math.round(m.scrollLeft / (m.clientWidth || 1));
+  const pos = car.querySelector('.car-pos');
+  if (pos) pos.textContent = `${i + 1} / ${n}`;
+  car.querySelectorAll('[data-car]').forEach(b => { b.disabled = (+b.dataset.car < 0 && i <= 0) || (+b.dataset.car > 0 && i >= n - 1); });
+}
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-car]');
+  if (!b) return;
+  const m = b.closest('.carrousel').querySelector('.medias');
+  m.scrollBy({ left: +b.dataset.car * m.clientWidth, behavior: 'smooth' });
+});
+document.addEventListener('scroll', e => { if (e.target.classList && e.target.classList.contains('medias')) carPos(e.target); }, true);
 
 // Suivi des leçons vues, sur cet appareil
 const VU = 'kit-nora-vu';
@@ -226,19 +361,32 @@ let P = [];
 function navRender(actif) {
   let g = '', h = '';
   P.forEach(p => {
-    if (p.groupe !== g) { h += `<h4>${esc(p.groupe)}</h4>`; g = p.groupe; }
-    h += `<a href="#${p.id}" ${p.id === actif ? 'aria-current="page"' : ''}>${p.n ? `<span class="n">${esc(p.n)}</span>` : ''}<span>${esc(p.titre)}</span>${vus[p.id] ? '<span class="v">✓</span>' : ''}</a>`;
+    if (p.groupe !== g) {
+      const du = P.filter(x => x.groupe === p.groupe && x.suivi), f = du.filter(x => vus[x.id]).length;
+      h += `<h4><span>${esc(p.groupe)}</span>${du.length > 1 ? `<small>${f}/${du.length}</small>` : ''}</h4>`; g = p.groupe;
+    }
+    h += `<a href="#${p.id}" ${p.id === actif ? 'aria-current="page"' : ''}>${p.n ? `<span class="n">${esc(p.n)}</span>` : ''}<span>${esc(p.titre)}</span>${vus[p.id] ? '<span class="v" aria-label="vu">✓</span>' : ''}</a>`;
   });
-  document.getElementById('nav').innerHTML = h;
+  const nav = document.getElementById('nav');
+  nav.innerHTML = h;
   const suivies = P.filter(p => p.suivi), faites = suivies.filter(p => vus[p.id]).length;
   document.getElementById('barre').style.width = (100 * faites / suivies.length) + '%';
-  document.getElementById('progres-txt').textContent = `${faites} sur ${suivies.length} vues`;
+  document.getElementById('progres-txt').innerHTML = `<b>${faites}</b> sur ${suivies.length} pages vues`;
+  document.getElementById('compte').textContent = `${faites}/${suivies.length}`;
+  const p = P.find(x => x.id === actif);
+  document.getElementById('ou').textContent = p ? p.groupe : '';
+  // Garde la page active visible dans le sommaire
+  const a = nav.querySelector('[aria-current]'), aside = document.getElementById('sommaire');
+  if (a && (a.offsetTop < aside.scrollTop + 40 || a.offsetTop > aside.scrollTop + aside.clientHeight - 60)) aside.scrollTop = a.offsetTop - aside.clientHeight / 3;
 }
 function suite(id) {
   const i = P.findIndex(p => p.id === id), av = P[i - 1], ap = P[i + 1], p = P[i];
-  return `<div class="suite">${av ? `<a class="btn" href="#${av.id}">← ${esc(av.titre)}</a>` : '<span></span>'}
-    <span style="display:flex;gap:10px;flex-wrap:wrap">${p.suivi ? `<button class="btn ${vus[id] ? 'vu' : ''}" data-vu="${id}">${vus[id] ? '✓ Vu' : 'Marquer comme vu'}</button>` : ''}
-    ${ap ? `<a class="btn plein" href="#${ap.id}">${esc(ap.titre)} →</a>` : ''}</span></div>`;
+  return `<div class="suite">
+    ${p.suivi ? `<button class="vu-btn ${vus[id] ? 'fait' : ''}" type="button" data-vu="${id}" aria-pressed="${vus[id] ? 'true' : 'false'}">${vus[id] ? 'Vu' : 'Marquer comme vu et passer à la suite'}</button>` : ''}
+    <nav class="pn" aria-label="Pages voisines">
+      ${av ? `<a class="prec" href="#${av.id}"><small>← Précédent</small><span>${esc(av.titre)}</span></a>` : ''}
+      ${ap ? `<a class="suiv" href="#${ap.id}"><small>Suivant →</small><span>${esc(ap.titre)}</span></a>` : ''}
+    </nav></div>`;
 }
 document.addEventListener('click', e => {
   const b = e.target.closest('[data-vu]');
@@ -251,55 +399,64 @@ document.addEventListener('click', e => {
 
 // Les vues
 const V = {};
-V.accueil = () => `<div class="eyebrow">Pour Nora, de la part de Harry</div><h1>Formation ambassadeurs Punchlines</h1>
+V.accueil = () => {
+  const suivies = P.filter(p => p.suivi), faites = suivies.filter(p => vus[p.id]).length, prochaine = suivies.find(p => !vus[p.id]);
+  return `<div class="eyebrow">Pour Nora, de la part de Harry</div><h1>Formation ambassadeurs Punchlines</h1>
   <p class="lede">Tout pour reprendre le suivi des ambassadeurs TikTok : où on en est, trois sources pour apprendre le métier et nos pubs qui ont le mieux marché.</p>
+  ${faites && prochaine ? `<div class="reprendre"><a class="btn plein" href="#${prochaine.id}">Reprendre : ${esc(prochaine.titre)} →</a></div>` : ''}
   <ol class="etapes">
-    <li><div><b><a href="#programme">Le programme et ton rôle</a></b><span>L'accord avec les ambassadeurs, leur parcours, où en est chacun. 5 minutes.</span></div></li>
-    <li><div><b><a href="#sge-11">Le cours SGE</a></b><span>16 leçons avec vidéo. Si tu manques de temps : leçons 05 (former), 11 (les 4 formats) et 13 (les accroches).</span></div></li>
-    <li><div><b><a href="#robin">Robin Dormion</a></b><span>Sa méthode pour faire percer des débutants, puis ses vidéos les plus utiles.</span></div></li>
-    <li><div><b><a href="#plutus">Plutus Media</a></b><span>Les leçons d'une agence UGC qui pilote des centaines de créateurs.</span></div></li>
-    <li><div><b><a href="#pubs">Nos pubs gagnantes</a></b><span>Les posts Punchlines qui ont le mieux marché en pub, pour inspirer les ambassadeurs.</span></div></li>
+    <li><div><a href="#programme">Le programme et ton rôle</a><span>L'accord avec les ambassadeurs, leur parcours, où en est chacun. 5 minutes.</span></div></li>
+    <li><div><a href="#sge-11">Le cours SGE</a><span>16 leçons avec vidéo. Si tu manques de temps : leçons 05 (former), 11 (les 4 formats) et 13 (les accroches).</span></div></li>
+    <li><div><a href="#robin">Robin Dormion</a><span>Sa méthode pour faire percer des débutants, puis ses vidéos les plus utiles.</span></div></li>
+    <li><div><a href="#plutus">Plutus Media</a><span>Les leçons d'une agence UGC qui pilote des centaines de créateurs.</span></div></li>
+    <li><div><a href="#pubs">Nos pubs gagnantes</a><span>Les posts Punchlines qui ont le mieux marché en pub, pour inspirer les ambassadeurs.</span></div></li>
   </ol>
-  <p class="lede" style="font-size:16px">Ta progression se coche sur cet appareil, dans la barre de gauche.</p>`;
+  <p class="note-bas">Ta progression se coche sur cet appareil, dans le sommaire. En bas de chaque page, « Marquer comme vu » te passe à la suivante.</p>`;
+};
 V.programme = () => `<div class="eyebrow">Démarrer</div>` + `<div class="md">${md(D.programme)}</div>`;
+function annexes(liste) { const h = liste.filter(Boolean).join(''); return h ? `<div class="annexes">${h}</div>` : ''; }
 function vueLecon(l) {
-  return `<div class="eyebrow">Cours SGE · leçon ${l.num}</div><h1>${esc(l.titre_fr || l.titre_en)}</h1>
-    <p class="lede">${esc(l.en_bref || '')}</p>
-    ${l.yt ? lecteur(l.yt, l.moments_video) : ''}
+  const titre = l.titre_fr || l.titre_en;
+  return `<div class="eyebrow">Cours SGE · leçon ${l.num}</div><h1>${esc(titre)}</h1>
+    ${l.en_bref ? `<p class="lede">${esc(l.en_bref)}</p>` : ''}
+    ${l.yt ? lecteur(l.yt, l.moments_video, titre) : ''}
     <div class="md">${md(l.corps || '')}</div>
     ${l.a_retenir && l.a_retenir.length ? `<div class="encart retenir"><h3>À retenir</h3><ul>${l.a_retenir.map(x => `<li>${esc(x)}</li>`).join('')}</ul></div>` : ''}
     ${l.pour_punchlines ? `<div class="encart punch"><h3>Pour Punchlines</h3><p>${esc(l.pour_punchlines)}</p></div>` : ''}
-    ${l.original ? `<details class="plus"><summary>Le texte d'origine, en anglais</summary><div class="md">${md(l.original)}</div></details>` : ''}
-    ${(l.transcripts || []).map(t => `<details class="plus"><summary>${/clips/i.test(t.slice(0, 120)) ? "Les clips d'exemple, détaillés" : 'La transcription de la vidéo'}</summary><div class="md">${md(t)}</div></details>`).join('')}`;
+    ${annexes([
+      l.original ? `<details class="plus"><summary>Le texte d'origine, en anglais</summary><div class="md">${md(l.original)}</div></details>` : '',
+      ...(l.transcripts || []).map(t => `<details class="plus"><summary>${/clips/i.test(t.slice(0, 120)) ? "Les clips d'exemple, détaillés" : 'La transcription de la vidéo'}</summary><div class="md">${md(t)}</div></details>`),
+    ])}`;
 }
 V.robin = () => {
   const R = D.robin;
   return `<div class="eyebrow">Robin Dormion</div><h1>La méthode de Robin</h1>
-  <p class="lede">${esc(R.chaine.presentation)} <a href="${R.chaine.url}" target="_blank" rel="noopener">Sa chaîne</a>.</p>
-  ${R.methode.map(s => `<h2>${esc(s.titre)}</h2><ul>${s.points.map(p => `<li>${md(p.texte).replace(/^<p>|<\/p>\s*$/g, '')}${p.video_id ? ` <a href="#robin-${p.video_id}">(voir la vidéo${p.t != null ? ' à ' + mmss(p.t) : ''})</a>` : ''}</li>`).join('')}</ul>`).join('')}
+  <p class="lede">${esc(R.chaine.presentation)} <a href="${esc(R.chaine.url)}" target="_blank" rel="noopener">Sa chaîne YouTube</a>.</p>
+  ${R.methode.map(s => `<h2>${esc(s.titre)}</h2><ul class="prose robin-liste">${s.points.map(p => `<li>${enLigne(p.texte)}${p.video_id ? ` <a class="voir" href="#robin-${p.video_id}">Voir la vidéo${p.t != null ? ' à ' + mmss(p.t) : ''}</a>` : ''}</li>`).join('')}</ul>`).join('')}
   ${R.a_appliquer.length ? `<div class="encart punch"><h3>Ce qu'on applique dès cette semaine</h3><ul>${R.a_appliquer.map(x => `<li>${esc(x)}</li>`).join('')}</ul></div>` : ''}
   <h2>Ses vidéos, dans l'ordre d'utilité</h2>
-  <div class="cartes">${R.videos.map(v => `<a class="carte" href="#robin-${v.id}">${v.top3 ? '<span class="badge">À voir en premier</span>' : `<span class="badge">n° ${v.rang}</span>`}<b>${esc(v.titre)}</b><span>${esc(v.duree || '')}</span></a>`).join('')}</div>`;
+  <div class="cartes">${R.videos.map(v => `<a class="carte" href="#robin-${v.id}"><span class="tag ${v.top3 ? 'fort' : ''}">${v.top3 ? 'À voir en premier' : 'Vidéo ' + v.rang}${vus['robin-' + v.id] ? ' <span class="tag ok">· vue</span>' : ''}</span><b>${esc(v.titre)}</b><span>${esc(v.duree || '')}</span></a>`).join('')}</div>`;
 };
 function vueRobin(v) {
-  return `<div class="eyebrow">Robin Dormion · vidéo ${v.rang}${v.top3 ? ' · à voir en premier' : ''}</div><h1>${esc(v.titre)}</h1>
-    <p class="lede">${esc(v.pourquoi)}</p>
-    ${lecteur(v.id, v.moments)}
+  return `<div class="eyebrow">Robin Dormion · vidéo ${v.rang}</div><h1>${esc(v.titre)}</h1>
+    ${v.top3 ? '<div class="tag fort seul">À voir en premier</div>' : ''}
+    ${v.pourquoi ? `<p class="lede">${esc(v.pourquoi)}</p>` : ''}
+    ${lecteur(v.id, v.moments, v.titre)}
     <div class="encart retenir"><h3>Les idées clés</h3><ul>${v.idees.map(x => `<li>${esc(x)}</li>`).join('')}</ul></div>
-    ${v.transcript ? `<details class="plus"><summary>La transcription</summary><div class="md">${md(v.transcript)}</div></details>` : ''}`;
+    ${annexes([v.transcript ? `<details class="plus"><summary>La transcription</summary><div class="md">${md(v.transcript)}</div></details>` : ''])}`;
 }
 V.plutus = () => {
   const L = D.plutus;
   return `<div class="eyebrow">Plutus Media</div><h1>Ce que nous apprend Plutus Media</h1><p class="lede">${esc(L.intro)}</p>
   <div class="encart retenir"><h3>L'essentiel</h3><ul>${L.essentiel.map(x => `<li>${esc(x)}</li>`).join('')}</ul></div>
-  <h2>Les leçons</h2><div class="cartes">${L.lecons.map((l, i) => `<a class="carte" href="#plutus-${l.id}"><span class="badge">Leçon ${i + 1}</span><b>${esc(l.titre)}</b><span>${esc(l.resume)}</span></a>`).join('')}</div>`;
+  <h2>Les leçons</h2><div class="cartes">${L.lecons.map((l, i) => `<a class="carte" href="#plutus-${l.id}"><span class="tag">Leçon ${i + 1}${vus['plutus-' + l.id] ? ' <span class="tag ok">· vue</span>' : ''}</span><b>${esc(l.titre)}</b><span>${esc(l.resume)}</span></a>`).join('')}</div>`;
 };
 function vuePlutus(l, i) {
   return `<div class="eyebrow">Plutus Media · leçon ${i + 1}</div><h1>${esc(l.titre)}</h1><p class="lede">${esc(l.resume)}</p>
-    <h2>À comprendre</h2><ul>${l.a_comprendre.map(x => `<li>${md(x).replace(/^<p>|<\/p>\s*$/g, '')}</li>`).join('')}</ul>
-    ${l.exemples && l.exemples.length ? `<h2>Leurs exemples</h2><ul>${l.exemples.map(x => `<li>${md(x).replace(/^<p>|<\/p>\s*$/g, '')}</li>`).join('')}</ul>` : ''}
+    <h2>À comprendre</h2><ul class="prose">${l.a_comprendre.map(x => `<li>${enLigne(x)}</li>`).join('')}</ul>
+    ${l.exemples && l.exemples.length ? `<h2>Leurs exemples</h2><ul class="prose">${l.exemples.map(x => `<li>${enLigne(x)}</li>`).join('')}</ul>` : ''}
     ${l.pour_nora && l.pour_nora.length ? `<div class="encart punch"><h3>Pour nos ambassadeurs</h3><ul>${l.pour_nora.map(x => `<li>${esc(x)}</li>`).join('')}</ul></div>` : ''}
-    <details class="plus"><summary>Les emails sources (${l.sources.length})</summary>${l.sources.map(s => `<details class="plus"><summary>${esc(s.date)} · ${esc(s.sujet)}</summary><div class="md">${md(D.plutus.emails[s.fichier] || '')}</div></details>`).join('')}</details>`;
+    ${annexes([`<details class="plus"><summary>Les emails sources (${l.sources.length})</summary>${l.sources.map(s => `<details class="plus"><summary>${esc(s.date)} · ${esc(s.sujet)}</summary><div class="md">${md(D.plutus.emails[s.fichier] || '')}</div></details>`).join('')}</details>`])}`;
 }
 const nb = n => n == null ? '' : Number(n).toLocaleString('fr-FR');
 const eur = n => n == null ? '' : Number(n).toLocaleString('fr-FR', { maximumFractionDigits: n < 20 ? 2 : 0 }) + ' €';
@@ -308,31 +465,39 @@ V.pubs = () => {
   return `<div class="eyebrow">Ce qui a marché pour nous</div><h1>Nos pubs gagnantes</h1>
   <p class="lede">Nos posts qui ont le mieux marché en pub TikTok : ceux qui ont tourné le plus longtemps, dépensé le plus et ramené des essais au meilleur prix. Tous ont été poussés en pub. Ils servent à montrer aux ambassadeurs à quoi ressemble un post Punchlines qui fonctionne.</p>
   ${G.a_retenir && G.a_retenir.length ? `<div class="encart retenir"><h3>Ce qui revient</h3><ul>${G.a_retenir.map(x => `<li>${esc(x)}</li>`).join('')}</ul></div>` : ''}
-  <p style="color:var(--muted);font-size:14px">${esc(G.score || '')} Source : ${esc(G.source || '')}, lu le ${esc(G.lu_le || '')}.</p>
-  ${G.posts.map(p => `<article class="pub">
-    <div><div class="medias">${(p.medias || []).map(m => m.type === 'video' ? `<video class="charge" data-media="${m.chemin}" controls playsinline preload="metadata"></video>` : `<img class="charge" data-media="${m.chemin}" alt="Slide du post">`).join('') || '<div class="charge" style="aspect-ratio:9/16"></div>'}</div>
-      ${(p.medias || []).length > 1 ? `<div class="nb">${p.medias.length} slides, fais défiler</div>` : ''}</div>
-    <div><span class="badge">n° ${p.rang}${p.en_diffusion ? ' · en diffusion' : ''}</span>
-      <h2 style="margin:10px 0 4px">${esc(p.compte)}</h2><div style="color:var(--muted)">${esc(p.format || p.type || '')}</div>
+  ${G.score || G.source ? `<details class="plus note"><summary>Comment ces pubs sont classées${G.lu_le ? `, chiffres lus le ${esc(G.lu_le)}` : ''}</summary>${G.score ? `<p>${esc(G.score)}</p>` : ''}${G.source ? `<p>Source : ${esc(G.source)}.</p>` : ''}</details>` : ''}
+  ${G.posts.map(p => {
+    const M = p.medias || [];
+    return `<article class="pub">
+    <div class="carrousel"><div class="medias">${M.map((m, i) => m.type === 'video' ? `<video class="charge" data-media="${m.chemin}" controls playsinline preload="metadata"></video>` : `<img class="charge" data-media="${m.chemin}" alt="Slide ${i + 1} sur ${M.length}" loading="lazy">`).join('') || '<div class="charge"></div>'}</div>
+      ${M.length > 1 ? `<div class="car-nav"><button type="button" data-car="-1" aria-label="Slide précédente" disabled>‹</button><span class="car-pos">1 / ${M.length}</span><button type="button" data-car="1" aria-label="Slide suivante">›</button></div>` : ''}</div>
+    <div><div class="pub-tete"><span class="tag fort">N° ${p.rang}</span>${p.en_diffusion ? '<span class="tag ok">En diffusion</span>' : ''}</div>
+      <h2>${esc(p.compte)}</h2><p class="format">${esc(p.format || p.type || '')}</p>
       <div class="chiffres">
-        ${p.depense != null ? `<div><b>${eur(p.depense)}</b>dépensés</div>` : ''}
+        ${p.cout_par_essai != null ? `<div class="cle"><b>${eur(p.cout_par_essai)}</b>par essai</div>` : ''}
         ${p.essais != null ? `<div><b>${nb(p.essais)}</b>essais</div>` : ''}
-        ${p.cout_par_essai != null ? `<div><b>${eur(p.cout_par_essai)}</b>par essai</div>` : ''}
+        ${p.depense != null ? `<div><b>${eur(p.depense)}</b>dépensés</div>` : ''}
         ${p.jours_diffusion != null ? `<div><b>${nb(p.jours_diffusion)} j</b>avec de la pub</div>` : ''}
         ${p.vues != null ? `<div><b>${nb(p.vues)}</b>vues</div>` : ''}
       </div>
       <dl>${p.accroche ? `<dt>L'accroche</dt><dd>${esc(p.accroche)}</dd>` : ''}
         ${p.pourquoi ? `<dt>Pourquoi ça a marché</dt><dd>${esc(p.pourquoi)}</dd>` : ''}
         ${p.comment_refaire ? `<dt>Comment un ambassadeur le refait</dt><dd>${esc(p.comment_refaire)}</dd>` : ''}</dl>
-      <p><a href="${esc(p.lien)}" target="_blank" rel="noopener">Voir sur TikTok</a></p></div>
-  </article>`).join('')}`;
+      ${p.lien ? `<a href="${esc(p.lien)}" target="_blank" rel="noopener">Voir le post sur TikTok ↗</a>` : ''}</div>
+  </article>`;
+  }).join('')}`;
 };
 V.agent = () => `<div class="eyebrow">Ressources</div><h1>Tout télécharger</h1>
   <p class="lede">Pour travailler avec ton agent IA (Claude, ChatGPT…), télécharge le kit en un seul fichier texte et donne-le-lui. Il contient tout : le programme, le cours en français et en anglais, les transcriptions, Robin Dormion, Plutus Media et nos pubs gagnantes.</p>
-  <div class="chips" style="gap:12px"><button class="btn plein" id="dl-kit">Télécharger le kit en un fichier</button>
-  ${D.dropbox ? `<a class="btn" target="_blank" rel="noopener" href="${esc(D.dropbox)}">Ouvrir le dossier Dropbox</a>` : ''}</div>
+  <div class="actions"><button class="btn plein" type="button" id="dl-kit">Télécharger le kit (un fichier .md)</button>
+  ${D.dropbox ? `<a class="btn" target="_blank" rel="noopener" href="${esc(D.dropbox)}">Ouvrir le dossier Dropbox ↗</a>` : ''}</div>
   <div class="md"><p>Le dossier Dropbox contient les fichiers d'origine : vidéos et slides de nos pubs, clips d'exemple du cours, modèle de contrat, tableurs, et chaque transcription en fichier séparé.</p></div>`;
 
+function menu(ouvert) {
+  document.body.classList.toggle('menu-ouvert', ouvert);
+  document.getElementById('menu-btn').setAttribute('aria-expanded', ouvert ? 'true' : 'false');
+  if (ouvert) { navRender((location.hash || '#accueil').slice(1)); document.getElementById('fermer').focus(); }
+}
 function afficher() {
   if (!D) return;
   const id = (location.hash || '#accueil').slice(1);
@@ -345,8 +510,9 @@ function afficher() {
   const page = document.getElementById('page');
   page.innerHTML = h + (P.some(p => p.id === id) ? suite(id) : '');
   hydrate(page);
+  page.querySelectorAll('.carrousel .medias').forEach(carPos);
   navRender(id);
-  document.body.classList.remove('menu-ouvert');
+  menu(false);
   window.scrollTo(0, 0);
   const t = P.find(p => p.id === id);
   document.title = (t ? t.titre + ' · ' : '') + 'Formation ambassadeurs';
@@ -357,7 +523,10 @@ function afficher() {
     a.download = 'kit-ambassadeurs-punchlines.md'; a.click();
   };
 }
-document.getElementById('menu-btn').onclick = () => document.body.classList.toggle('menu-ouvert');
+document.getElementById('menu-btn').onclick = () => menu(!document.body.classList.contains('menu-ouvert'));
+document.getElementById('fermer').onclick = () => { menu(false); document.getElementById('menu-btn').focus(); };
+document.getElementById('voile').onclick = () => menu(false);
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && document.body.classList.contains('menu-ouvert')) { menu(false); document.getElementById('menu-btn').focus(); } });
 window.addEventListener('hashchange', afficher);
 
 async function demarrer(mdp) {
@@ -375,10 +544,13 @@ async function demarrer(mdp) {
   if (!mdp) try { mdp = localStorage.getItem('kit-nora-cle'); } catch {}
   if (mdp) { try { await demarrer(mdp); return; } catch {} }
   document.getElementById('verrou').hidden = false;
+  document.getElementById('mdp').focus();
   document.querySelector('#verrou form').onsubmit = async e => {
     e.preventDefault();
+    const b = e.target.querySelector('button'), err = document.getElementById('err');
+    err.textContent = ''; b.disabled = true; b.textContent = 'Ouverture…';
     try { await demarrer(document.getElementById('mdp').value.trim()); }
-    catch { document.getElementById('err').textContent = 'Ce mot de passe ne marche pas.'; }
+    catch { err.textContent = 'Ce mot de passe ne marche pas.'; b.disabled = false; b.textContent = 'Ouvrir la formation'; }
   };
 })();
 </script>
